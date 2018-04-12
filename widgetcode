@@ -1,0 +1,75 @@
+<section id="blog" class="post">
+        <h2>Comments on this post</h2>
+
+
+{exp:threaded_comments:display id="comment-reply" }
+<ul>
+{comments}
+{thread_start}
+<ul>
+{/thread_start}
+<li>
+<img src="{exp:gravatar email="{email}"  size='80'}" />
+   
+              <div class="content">
+                <h3>{url_as_author}</h3>
+                <p>{comment}</p>
+                <p><a href="javascript:void(0)" class="reply" rel="{comment_id}">Reply to this comment</a> <a href="javascript:void(0)" class="quote reply" rel="{comment_id}">Quote and reply</a></p>
+               
+              </div>
+</li>
+{thread_end}
+</ul>
+{/thread_end}
+
+{/comments}
+</ul>
+{/exp:threaded_comments:display}
+
+
+
+{exp:threaded_comments:form id="comments"}
+
+<p>
+            <label for="your-name">Your Name:</label>
+            <input type="text" name="name"  id="your-name" placeholder="Enter your name">
+          </p>
+          <p>
+             <label for="your-email">Your Email:<span>(will not be published)</span></label>
+              <input type="email" name="email" placeholder="Enter your email"  id="your-email" >
+          </p>
+          <p>
+             <label for="your-url">Your Url:</label>
+              <input type="url" name="url" placeholder="Enter your url" id="your-url" >
+          </p>
+          <p>
+            <label for="comment">Your Comment:</label>
+            <textarea id="comment" name="comment"></textarea>
+          </p>
+          
+          <button type="submit" class="blue">Post Comment</button>
+
+{/exp:threaded_comments:form} 
+
+
+<script type="text/javascript">
+$(document).ready(function(){
+  $('.reply').click(function() {
+    $('#comments input[name=parent_id]').val($(this).attr('rel'));
+    $('#comments').insertAfter( // Insert the comment form after...
+    $(this)
+    .parent() // The containing p tag
+    );
+    $('#comments').show();
+  });
+  $('.quote').click(function() {
+    $('#comments textarea[name=comment]').val('[quote]'+ 
+    $(this).parent().parent().find('.comment-text').text()+
+    '[/quote]'
+    );
+  });
+});
+</script>
+        
+      </section>
+      <!-- end blog-->
